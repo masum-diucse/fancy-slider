@@ -50,7 +50,9 @@ const selectItem = (event, img) => {
   if (item === -1) {
     sliders.push(img);
   } else {
-    alert('Hey, Already added !')
+    element.classList.remove('added');
+    sliders = sliders.filter(itemImage => itemImage !== img);
+    
   }
 }
 var timer
@@ -75,7 +77,6 @@ const createSlider = () => {
   // hide image aria
   imagesArea.style.display = 'none';
   let intervalTime=document.getElementById('duration').value||1000;
-  console.log(intervalTime);
   if(intervalTime<0 ){
     confirm("Duration time must be positive");
     intervalTime=1000;
