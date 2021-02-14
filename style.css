@@ -55,6 +55,13 @@ img {
   display: none;
 }
 
+.image-hovering img {
+  transition: all .2s ease-in-out;  
+}
+.image-hovering img:hover{
+  transform: scale(.95) rotate(-1deg);
+}
+
 @media (max-width: 767px) {
   .justify-content-around.align-items-center.mt-3.gallery-header.mb-2 {
     flex-direction: column;
