@@ -28,7 +28,12 @@ const showImages = (images) => {
 
 }
 
-//https://pixabay.com/api/?key=20269641-1b33d3791cdfedec964769291&q=river&image_type=photo&pretty=true
+document.getElementById('search')
+.addEventListener("keypress",function(event){
+  if(event.key==='Enter'){
+    search();
+  }
+});
 const getImages = (query) => {
   fetch(`https://pixabay.com/api/?key=${KEY}&q=${query}&image_type=photo&pretty=true`)
     .then(response => response.json())
@@ -69,14 +74,6 @@ const createSlider = () => {
   document.querySelector('.main').style.display = 'block';
   // hide image aria
   imagesArea.style.display = 'none';
-  // let duration;
-  // if(document.getElementById('duration').value <0){
-  //   alert("Duration must be positive Number");
-  //   ocument.getElementById('duration').value=1000;
-  // }else{
-  //   duration = document.getElementById('duration').value;
-  // }
-
   let intervalTime=document.getElementById('duration').value||1000;
   console.log(intervalTime);
   if(intervalTime<0 ){
@@ -134,13 +131,16 @@ const changeSlide = (index) => {
 }
 
 searchBtn.addEventListener('click', function () {
+  search();
+})
+function search(){
   document.querySelector('.main').style.display = 'none';
   clearInterval(timer);
   const search = document.getElementById('search');
   getImages(search.value)
+  search.value=""
   sliders.length = 0;
-})
-
+}
 sliderBtn.addEventListener('click', function () {
   createSlider()
 })
