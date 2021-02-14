@@ -28,10 +28,11 @@ const showImages = (images) => {
 
 }
 
+//https://pixabay.com/api/?key=20269641-1b33d3791cdfedec964769291&q=river&image_type=photo&pretty=true
 const getImages = (query) => {
-  fetch(`https://pixabay.com/api/?key=${KEY}=${query}&image_type=photo&pretty=true`)
+  fetch(`https://pixabay.com/api/?key=${KEY}&q=${query}&image_type=photo&pretty=true`)
     .then(response => response.json())
-    .then(data => showImages(data.hitS))
+    .then(data => showImages(data.hits))
     .catch(err => console.log(err))
 }
 
@@ -50,7 +51,8 @@ const selectItem = (event, img) => {
 var timer
 const createSlider = () => {
   // check slider image length
-  if (sliders.length < 2) {
+  
+    if (sliders.length < 2) {
     alert('Select at least 2 image.')
     return;
   }
@@ -63,12 +65,34 @@ const createSlider = () => {
   <span class="next" onclick="changeItem(1)"><i class="fas fa-chevron-right"></i></span>
   `;
 
-  sliderContainer.appendChild(prevNext)
+  sliderContainer.appendChild(prevNext);
   document.querySelector('.main').style.display = 'block';
   // hide image aria
   imagesArea.style.display = 'none';
-  const duration = document.getElementById('duration').value || 1000;
+  // let duration;
+  // if(document.getElementById('duration').value <0){
+  //   alert("Duration must be positive Number");
+  //   ocument.getElementById('duration').value=1000;
+  // }else{
+  //   duration = document.getElementById('duration').value;
+  // }
+
+  let intervalTime=document.getElementById('duration').value||1000;
+  console.log(intervalTime);
+  if(intervalTime<0 ){
+    confirm("Duration time must be positive");
+    intervalTime=1000;
+    document.getElementById('duration').value="";
+  }
+  if(isNaN(intervalTime)){
+    confirm("Please enter correct value");
+    intervalTime=1000;
+    document.getElementById('duration').value="";
+  }
+  
+  
   sliders.forEach(slide => {
+    
     let item = document.createElement('div')
     item.className = "slider-item";
     item.innerHTML = `<img class="w-100"
@@ -80,7 +104,7 @@ const createSlider = () => {
   timer = setInterval(function () {
     slideIndex++;
     changeSlide(slideIndex);
-  }, duration);
+  }, intervalTime);
 }
 
 // change slider index 
